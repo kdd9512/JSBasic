@@ -1,8 +1,8 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width=800;
-canvas.height=800;
+canvas.width = 800;
+canvas.height = 800;
 
 // ctx.moveTo(50, 50); // 시작점을 가로,세로(px) 만큼 움직인다. 이 상태로는 단순히 시작점만 지정한 것이므로 그냥 아무것도 표시되지 않을 것.
 // ctx.lineTo(150, 50); // 시작 지점(가로, 세로 px)에서부터 선을 긋는다
@@ -31,19 +31,20 @@ canvas.height=800;
 // ctx.fillStyle = "red";
 // ctx.fill();
 
-// 집 모양을 만들어보는 예제.
 
-// (x축,y축,넓이,높이) 를 받아 도형을 만들고 fill() 의 기본색상으로 채운다
-ctx.fillRect(200, 200, 50, 200);
-ctx.fillRect(400, 200, 50, 200);
+// 화면에 사람 모양을 출력하는 예제.
+ctx.fillRect(210 - 40, 200 - 30, 15, 100);
+ctx.fillRect(350 - 40, 200 - 30, 15, 100);
+ctx.fillRect(260 - 40, 200 - 30, 60, 200);
 
-// 선을 그을 때 두께를 결정. 단위는 px
-ctx.lineWidth = 2;
-// (x축,y축,넓이,높이) 를 받아 선을 긋는다.
-ctx.fillRect(300, 300, 50, 100);
-ctx.fillRect(200, 200, 200, 20);
+// 원을 그릴 때 사용하는 .arc()
+// * 이 메서드는 원을 시계 3시방향에서부터 반시계방향으로 그린다.
+// 0, 2 * Math.PI -> 원이 시작되는 angle, 원이 끝나는 angle
+ctx.arc(250, 150, 20, 0, 2 * Math.PI);
+ctx.fill();
 
-ctx.moveTo(200, 200);
-ctx.lineTo(325, 100);
-ctx.lineTo(450, 200);
+ctx.beginPath();
+ctx.fillStyle = "white";
+ctx.arc(260 + 10, 80, 8, 0, 2 * Math.PI);
+ctx.arc(220 + 10, 80, 8, 0, 2 * Math.PI);
 ctx.fill();

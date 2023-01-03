@@ -33,18 +33,40 @@ canvas.height = 800;
 
 
 // 화면에 사람 모양을 출력하는 예제.
-ctx.fillRect(210 - 40, 200 - 30, 15, 100);
-ctx.fillRect(350 - 40, 200 - 30, 15, 100);
-ctx.fillRect(260 - 40, 200 - 30, 60, 200);
+// ctx.fillRect(210 - 40, 200 - 30, 15, 100);
+// ctx.fillRect(350 - 40, 200 - 30, 15, 100);
+// ctx.fillRect(260 - 40, 200 - 30, 60, 200);
 
 // 원을 그릴 때 사용하는 .arc()
 // * 이 메서드는 원을 시계 3시방향에서부터 반시계방향으로 그린다.
 // 0, 2 * Math.PI -> 원이 시작되는 angle, 원이 끝나는 angle
-ctx.arc(250, 150, 20, 0, 2 * Math.PI);
-ctx.fill();
+// ctx.arc(250, 150, 20, 0, 2 * Math.PI);
+// ctx.fill();
 
-ctx.beginPath();
-ctx.fillStyle = "white";
-ctx.arc(260 + 10, 80, 8, 0, 2 * Math.PI);
-ctx.arc(220 + 10, 80, 8, 0, 2 * Math.PI);
-ctx.fill();
+// ctx.beginPath();
+// ctx.fillStyle = "white";
+// ctx.arc(260 + 10, 80, 8, 0, 2 * Math.PI);
+// ctx.arc(220 + 10, 80, 8, 0, 2 * Math.PI);
+// ctx.fill();
+
+const colors = [
+  "#00a8ff",
+  "#7f8fa6",
+  "#e84118",
+  "#273c75",
+  "#4cd137",
+  "#fbc531",
+]
+
+ctx.lineWidth = 3;
+
+function onClick(event) {
+  ctx.beginPath();
+  ctx.moveTo(0,0);
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  ctx.strokeStyle = color;
+  ctx.lineTo(event.offsetX, event.offsetY);
+  ctx.stroke();
+}
+
+canvas.addEventListener("mousemove", onClick);

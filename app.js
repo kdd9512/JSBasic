@@ -1,3 +1,4 @@
+const lineWidth = document.getElementById("line_width");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -49,7 +50,7 @@ canvas.height = 800;
 // ctx.arc(220 + 10, 80, 8, 0, 2 * Math.PI);
 // ctx.fill();
 
-ctx.lineWidth = 3;
+ctx.lineWidth = lineWidth.value;
 
 function onMove(event){
   if(isPainting) {
@@ -57,6 +58,7 @@ function onMove(event){
     ctx.stroke();
     return;
   }
+  ctx.beginPath(); // 시작점을 새로 지정해주지 않으면 선굵기 변경시 기존에 그었던 선도 같이 업데이트 되어버린다.
   ctx.moveTo(event.offsetX,event.offsetY);
 }
 
@@ -68,7 +70,13 @@ function cancelPainting(event) {
   isPainting = false;
 }
 
+function lineWidthChange(event) {
+  ctx.lineWidth = event.target.value;
+}
+
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", onMouseDown);
 canvas.addEventListener("mouseup", cancelPainting);
 canvas.addEventListener("mouseleave", cancelPainting);
+
+lineWidth.addEventListener("change", lineWidthChange);

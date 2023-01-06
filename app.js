@@ -1,6 +1,12 @@
+const color = document.getElementById("color");
+// forEach 를 이용하여 같은 이름 class 전부에 event-listener 를 넣어주기 위해 요소의 정보를 Array 로 만든다.
+const colorOption = Array.from(
+    document.getElementsByClassName("color-option")
+);
 const lineWidth = document.getElementById("line_width");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
+
 
 canvas.width = 800;
 canvas.height = 800;
@@ -52,6 +58,8 @@ canvas.height = 800;
 
 ctx.lineWidth = lineWidth.value;
 
+let isPainting = false;
+
 function onMove(event){
   if(isPainting) {
     ctx.lineTo(event.offsetX,event.offsetY);
@@ -74,9 +82,26 @@ function lineWidthChange(event) {
   ctx.lineWidth = event.target.value;
 }
 
+function colorChange(event) {
+  ctx.strokeStyle = event.target.value;
+  ctx.fillStyle = event.target.value;
+}
+
+function changeColorTemplate(event) {
+  // console.dir(event.target) : 이벤트가 발생한 요소의 dataset 을 본다.
+  ctx.strokeStyle = event.target.dataset.color;
+  ctx.fillStyle = event.target.dataset.color;
+  color.value = event.target.dataset.color;
+}
+
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", onMouseDown);
 canvas.addEventListener("mouseup", cancelPainting);
 canvas.addEventListener("mouseleave", cancelPainting);
 
 lineWidth.addEventListener("change", lineWidthChange);
+color.addEventListener("change",colorChange);
+colorOption.forEach((color) => color.addEventListener("click", changeColorTemplate));
+
+
+

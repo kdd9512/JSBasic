@@ -1,3 +1,4 @@
+const fillMode = document.getElementById("fill_mod");
 const color = document.getElementById("color");
 // forEach 를 이용하여 같은 이름 class 전부에 event-listener 를 넣어주기 위해 요소의 정보를 Array 로 만든다.
 const colorOption = Array.from(
@@ -57,8 +58,8 @@ canvas.height = 800;
 // ctx.fill();
 
 ctx.lineWidth = lineWidth.value;
-
 let isPainting = false;
+let isFilling = false;
 
 function onMove(event){
   if(isPainting) {
@@ -70,7 +71,7 @@ function onMove(event){
   ctx.moveTo(event.offsetX,event.offsetY);
 }
 
-function onMouseDown(event) {
+function startPainting(event) {
   isPainting = true;
 }
 
@@ -94,14 +95,31 @@ function changeColorTemplate(event) {
   color.value = event.target.dataset.color;
 }
 
+function onFillMode() {
+  if(isFilling) {
+    isFilling = false;
+    fillMode.innerText = "Fill"
+  } else {
+    isFilling = true;
+    fillMode.innerText = "Draw"
+  }
+}
+
+function onCanvasClick(){
+  if(isFilling) {
+    ctx.fillRect(0,0, 800, 800)
+  }
+}
+
 canvas.addEventListener("mousemove", onMove);
-canvas.addEventListener("mousedown", onMouseDown);
+canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
 canvas.addEventListener("mouseleave", cancelPainting);
 
+canvas.addEventListener("click", onCanvasClick);
 lineWidth.addEventListener("change", lineWidthChange);
 color.addEventListener("change",colorChange);
 colorOption.forEach((color) => color.addEventListener("click", changeColorTemplate));
-
+fillMode.addEventListener("click", onFillMode);
 
 

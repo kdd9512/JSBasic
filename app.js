@@ -1,8 +1,11 @@
-const fillMode = document.getElementById("fill_mod");
+const fillMode = document.getElementById("fill_mod"); // 캔버스 전체를 채우기
+const resetMode = document.getElementById("reset_mod"); // 캔버스 전체를 초기화
+const eraseMode = document.getElementById("erase_mod"); // 지우개 기능
+
 const color = document.getElementById("color");
 // forEach 를 이용하여 같은 이름 class 전부에 event-listener 를 넣어주기 위해 요소의 정보를 Array 로 만든다.
 const colorOption = Array.from(
-    document.getElementsByClassName("color-option")
+  document.getElementsByClassName("color-option")
 );
 const lineWidth = document.getElementById("line_width");
 const canvas = document.querySelector("canvas");
@@ -61,14 +64,14 @@ ctx.lineWidth = lineWidth.value;
 let isPainting = false;
 let isFilling = false;
 
-function onMove(event){
-  if(isPainting) {
-    ctx.lineTo(event.offsetX,event.offsetY);
+function onMove(event) {
+  if (isPainting) {
+    ctx.lineTo(event.offsetX, event.offsetY);
     ctx.stroke();
     return;
   }
   ctx.beginPath(); // 시작점을 새로 지정해주지 않으면 선굵기 변경시 기존에 그었던 선도 같이 업데이트 되어버린다.
-  ctx.moveTo(event.offsetX,event.offsetY);
+  ctx.moveTo(event.offsetX, event.offsetY);
 }
 
 function startPainting(event) {
@@ -96,7 +99,7 @@ function changeColorTemplate(event) {
 }
 
 function onFillMode() {
-  if(isFilling) {
+  if (isFilling) {
     isFilling = false;
     fillMode.innerText = "Fill"
   } else {
@@ -105,11 +108,23 @@ function onFillMode() {
   }
 }
 
-function onCanvasClick(){
-  if(isFilling) {
-    ctx.fillRect(0,0, 800, 800)
+function onCanvasClick() {
+  if (isFilling) {
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 }
+
+function onResetMode() {
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+function onEraseMode() {
+  ctx.strokeStyle = "white";
+  isFilling = false;
+  fillMode.innerText = "Fill";
+}
+
 
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
@@ -118,8 +133,11 @@ canvas.addEventListener("mouseleave", cancelPainting);
 
 canvas.addEventListener("click", onCanvasClick);
 lineWidth.addEventListener("change", lineWidthChange);
-color.addEventListener("change",colorChange);
+color.addEventListener("change", colorChange);
 colorOption.forEach((color) => color.addEventListener("click", changeColorTemplate));
+
 fillMode.addEventListener("click", onFillMode);
+resetMode.addEventListener("click", onResetMode);
+eraseMode.addEventListener("click", onEraseMode);
 
 

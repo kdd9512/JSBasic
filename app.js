@@ -1,6 +1,7 @@
 const fillMode = document.getElementById("fill_mod"); // 캔버스 전체를 채우기
 const resetMode = document.getElementById("reset_mod"); // 캔버스 전체를 초기화
 const eraseMode = document.getElementById("erase_mod"); // 지우개 기능
+const fileInput = document.getElementById("file"); // 파일을 업로드
 
 const color = document.getElementById("color");
 // forEach 를 이용하여 같은 이름 class 전부에 event-listener 를 넣어주기 위해 요소의 정보를 Array 로 만든다.
@@ -124,7 +125,17 @@ function onEraseMode() {
   isFilling = false;
   fillMode.innerText = "Fill";
 }
-
+// 이미지를 캔버스 크기에 맞춰서 draw
+function onFileChange(event) {
+  const file = event.target.files[0];
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.src = url;
+  img.onload = function(){
+    ctx.drawImage(img, 0,0, canvas.width, canvas.height);
+    fileInput.value = null; // file 값 초기화. 새 이미지를 추가하면 그 이미지가 덮어씌워질 수 있도록.
+  }
+}
 
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
@@ -140,4 +151,4 @@ fillMode.addEventListener("click", onFillMode);
 resetMode.addEventListener("click", onResetMode);
 eraseMode.addEventListener("click", onEraseMode);
 
-
+fileInput.addEventListener("change", onFileChange);

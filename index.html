@@ -13,10 +13,10 @@
 <body>
   <canvas></canvas>
   <!-- 선굵기 지정 input -->
-  <input type="range" id="line_width" min="1" max="10" value="3" step="0.5" />
+  <input type="range" id="line_width" min="1" max="10" value="3" step="0.1" />
   <!-- 선 색상 변경 -->
-  <input type="color" id="color" />
   <div>
+    <input type="color" id="color" />
     <div class="color-option" style="background-color: #ff9ff3;" data-color="#ff9ff3"></div>
     <div class="color-option" style="background-color: #feca57;" data-color="#feca57"></div>
     <div class="color-option" style="background-color: #54a0ff;" data-color="#54a0ff"></div>
@@ -34,6 +34,8 @@
   <button id="fill_mod">Fill</button>
   <button id="reset_mod">Reset all</button>
   <button id="erase_mod">Eraser</button>
+  <!-- 이미지만 업로드 가능하도록 accept 로 설정한다  -->
+  <input type="file" accept="image/*" id="file"/>
   <script src="app.js"></script>
 </body>
 

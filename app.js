@@ -1,7 +1,9 @@
 const fillMode = document.getElementById("fill_mod"); // 캔버스 전체를 채우기
 const resetMode = document.getElementById("reset_mod"); // 캔버스 전체를 초기화
 const eraseMode = document.getElementById("erase_mod"); // 지우개 기능
-const fileInput = document.getElementById("file"); // 파일을 업로드
+const fileInput = document.getElementById("file"); // 파일을 업로드하여 캔버스 전체에 출력.
+const textInput = document.getElementById("text"); // 텍스트를 삽입.
+
 
 const color = document.getElementById("color");
 // forEach 를 이용하여 같은 이름 class 전부에 event-listener 를 넣어주기 위해 요소의 정보를 Array 로 만든다.
@@ -62,6 +64,7 @@ canvas.height = 800;
 // ctx.fill();
 
 ctx.lineWidth = lineWidth.value;
+ctx.lineCap = "round"; // 선의 끝 모양을 결정한다. 여기서는 둥글게 설정.
 let isPainting = false;
 let isFilling = false;
 
@@ -136,11 +139,24 @@ function onFileChange(event) {
     fileInput.value = null; // file 값 초기화. 새 이미지를 추가하면 그 이미지가 덮어씌워질 수 있도록.
   }
 }
+// 캔버스를 더블클릭하면 클릭한 곳에 텍스트를 출력한다.
+function onDoubleClick(event) {
+  const text = textInput.value;
+  if(text !== "") {
+    ctx.save(); // 현재 상태를 저장한다. 이게 없으면 이하에서 lineWidth 강제설정한 값이 그대로 남아버림.
+    ctx.lineWidth = 1;
+    ctx.font = "60px serif";
+    ctx.fillText(text, event.offsetX, event.offsetX);
+    ctx.restore();
+  }
+ 
+}
 
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
 canvas.addEventListener("mouseleave", cancelPainting);
+canvas.addEventListener("dblclick", onDoubleClick);
 
 canvas.addEventListener("click", onCanvasClick);
 lineWidth.addEventListener("change", lineWidthChange);

@@ -3,6 +3,7 @@ const resetMode = document.getElementById("reset_mod"); // 캔버스 전체를 �
 const eraseMode = document.getElementById("erase_mod"); // 지우개 기능
 const fileInput = document.getElementById("file"); // 파일을 업로드하여 캔버스 전체에 출력.
 const textInput = document.getElementById("text"); // 텍스트를 삽입.
+const saveBtn = document.getElementById("save"); // 생성한 이미지를 저장한다.
 
 
 const color = document.getElementById("color");
@@ -149,8 +150,15 @@ function onDoubleClick(event) {
     ctx.fillText(text, event.offsetX, event.offsetX);
     ctx.restore();
   }
- 
 }
+// 캔버스에서 만든 이미지를 이하의 .download 에 설정한 이름과 확장자를 갖는 파일로 저장한다.
+ function onSaveClick(event){
+  const url = canvas.toDataURL(); // 해당 데이터의 URL값
+  const a = document.createElement("a"); // a태그 생성.
+  a.href = url;
+  a.download = "myDrawing.png";
+  a.click();
+ }
 
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
@@ -168,3 +176,4 @@ resetMode.addEventListener("click", onResetMode);
 eraseMode.addEventListener("click", onEraseMode);
 
 fileInput.addEventListener("change", onFileChange);
+saveBtn.addEventListener("click",onSaveClick);

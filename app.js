@@ -5,6 +5,9 @@ const fileInput = document.getElementById("file"); // 파일을 업로드하여 
 const textInput = document.getElementById("text"); // 텍스트를 삽입.
 const saveBtn = document.getElementById("save"); // 생성한 이미지를 저장한다.
 
+const changeFont = document.getElementById("change_font");
+const fntForm = document.getElementById("font_form");
+
 
 const color = document.getElementById("color");
 // forEach 를 이용하여 같은 이름 class 전부에 event-listener 를 넣어주기 위해 요소의 정보를 Array 로 만든다.
@@ -66,6 +69,7 @@ canvas.height = 800;
 
 ctx.lineWidth = lineWidth.value;
 ctx.lineCap = "round"; // 선의 끝 모양을 결정한다. 여기서는 둥글게 설정.
+ctx.font = "60px serif";
 let isPainting = false;
 let isFilling = false;
 
@@ -146,7 +150,7 @@ function onDoubleClick(event) {
   if(text !== "") {
     ctx.save(); // 현재 상태를 저장한다. 이게 없으면 이하에서 lineWidth 강제설정한 값이 그대로 남아버림.
     ctx.lineWidth = 1;
-    ctx.font = "60px serif";
+    // ctx.font = "60px serif";
     ctx.fillText(text, event.offsetX, event.offsetX);
     ctx.restore();
   }
@@ -158,6 +162,11 @@ function onDoubleClick(event) {
   a.href = url;
   a.download = "myDrawing.png";
   a.click();
+ }
+ // 폰트 변경
+ function onChangeFont(event) {
+  event.preventDefault();
+  console.log(event);
  }
 
 canvas.addEventListener("mousemove", onMove);
@@ -177,3 +186,4 @@ eraseMode.addEventListener("click", onEraseMode);
 
 fileInput.addEventListener("change", onFileChange);
 saveBtn.addEventListener("click",onSaveClick);
+changeFont.addEventListener("submit",onChangeFont);

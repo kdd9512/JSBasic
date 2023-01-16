@@ -69,7 +69,6 @@ canvas.height = 800;
 
 ctx.lineWidth = lineWidth.value;
 ctx.lineCap = "round"; // 선의 끝 모양을 결정한다. 여기서는 둥글게 설정.
-ctx.font = "60px serif";
 let isPainting = false;
 let isFilling = false;
 
@@ -139,15 +138,15 @@ function onFileChange(event) {
   const url = URL.createObjectURL(file);
   const img = new Image();
   img.src = url;
-  img.onload = function(){
-    ctx.drawImage(img, 0,0, canvas.width, canvas.height);
+  img.onload = function () {
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     fileInput.value = null; // file 값 초기화. 새 이미지를 추가하면 그 이미지가 덮어씌워질 수 있도록.
   }
 }
 // 캔버스를 더블클릭하면 클릭한 곳에 텍스트를 출력한다.
 function onDoubleClick(event) {
   const text = textInput.value;
-  if(text !== "") {
+  if (text !== "") {
     ctx.save(); // 현재 상태를 저장한다. 이게 없으면 이하에서 lineWidth 강제설정한 값이 그대로 남아버림.
     ctx.lineWidth = 1;
     // ctx.font = "60px serif";
@@ -156,18 +155,22 @@ function onDoubleClick(event) {
   }
 }
 // 캔버스에서 만든 이미지를 이하의 .download 에 설정한 이름과 확장자를 갖는 파일로 저장한다.
- function onSaveClick(event){
+function onSaveClick(event) {
   const url = canvas.toDataURL(); // 해당 데이터의 URL값
   const a = document.createElement("a"); // a태그 생성.
   a.href = url;
   a.download = "myDrawing.png";
   a.click();
- }
- // 폰트 변경
- function onChangeFont(event) {
+}
+// 폰트 변경
+// 20230116 추가.
+// 사용자의 input 은 믿을 수 없으므로 select 형태로 재작성 하여 
+// 해당 value 값들을 조합 & ctx.font 의 값을 변형하도록 변경 예정.
+function onChangeFont(event) {
   event.preventDefault();
-  console.log(event);
- }
+  const text = 
+  ctx.font = `${}${}px${}`;
+}
 
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
@@ -185,5 +188,5 @@ resetMode.addEventListener("click", onResetMode);
 eraseMode.addEventListener("click", onEraseMode);
 
 fileInput.addEventListener("change", onFileChange);
-saveBtn.addEventListener("click",onSaveClick);
-changeFont.addEventListener("submit",onChangeFont);
+saveBtn.addEventListener("click", onSaveClick);
+fntForm.addEventListener("submit", onChangeFont);

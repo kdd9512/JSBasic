@@ -41,8 +41,71 @@
   <button id="save">save image</button>
 
   <form id="font_form">
-    <input type="text" placeholder="input font name" id="change_font"/>
-    <button type="submit">Submit Font</button>
+    <input type="range" id="fntSize" min="10" max="40" value="10" step="1"/>
+    <select id="fntType" required>
+      <option value="serif" style="font-family: serif">Serif</option>
+                <option value="sans-serif" style="font-family: sans-serif">
+                  Sans-serif
+                </option>
+                <option value="courier new" style="font-family: courier new">
+                  Courier New
+                </option>
+                <option
+                  value="Lucida Console"
+                  style="font-family: Lucida Console"
+                >
+                  Lucida Console
+                </option>
+                <option value="cursive" style="font-family: cursive">
+                  Cursive
+                </option>
+                <option
+                  value="Brush Script MT"
+                  style="font-family: Brush Script MT"
+                >
+                  Brush Script MT
+                </option>
+                <option
+                  value="lucida Handwriting"
+                  style="font-family: lucida Handwriting"
+                >
+                  Lucida Handwriting
+                </option>
+                <option value="copperplate" style="font-family: copperplate">
+                  Copperplate
+                </option>
+                <option value="papyrus" style="font-family: Papyrus">
+                  Papyrus
+                </option>
+                <option
+                  value="'Noto Sans KR', sans-serif"
+                  style="font-family: 'Noto Sans KR', sans-serif"
+                >
+                  Noto Sans 한글
+                </option>
+                <option
+                  value="'Nanum Myeongjo', serif"
+                  style="font-family: 'Nanum Myeongjo', serif"
+                >
+                  나눔 명조
+                </option>
+                <option
+                  value="'Nanum Pen Script', cursive"
+                  style="font-family: 'Nanum Pen Script', cursive"
+                >
+                  나눔펜
+                </option>
+                <option
+                  value="'Jua', sans-serif"
+                  style="font-family: 'Jua', sans-serif"
+                >
+                  주아
+                </option>
+    </select>
+    <select id="fntWeight" required>
+      <option value="normal">normal</option>
+      <option value="bolder">bold</option>
+    </select>
   </form>
   
   <script src="app.js"></script>

@@ -5,8 +5,10 @@ const fileInput = document.getElementById("file"); // 파일을 업로드하여 
 const textInput = document.getElementById("text"); // 텍스트를 삽입.
 const saveBtn = document.getElementById("save"); // 생성한 이미지를 저장한다.
 
-const changeFont = document.getElementById("change_font");
 const fntForm = document.getElementById("font_form");
+const fntSize = document.getElementById("fntSize");
+const fntType = document.getElementById("fntType");
+const fntWeight = document.getElementById("fntWeight");
 
 
 const color = document.getElementById("color");
@@ -167,15 +169,21 @@ function onSaveClick(event) {
 // 사용자의 input 은 믿을 수 없으므로 select 형태로 재작성 하여 
 // 해당 value 값들을 조합 & ctx.font 의 값을 변형하도록 변경 예정.
 function onChangeFont(event) {
-  event.preventDefault();
-  const text = 
-  ctx.font = `${}${}px${}`;
+  const fsize = fntSize.value;
+  const ftype = fntType.value;
+  const fweight = fntWeight.value;
+  ctx.save();
+  ctx.font = `${fweight} ${fsize}px ${ftype}`;
+  console.log(ctx.font);
+  ctx.restore();
 }
 
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
 canvas.addEventListener("mouseleave", cancelPainting);
+
+fntForm.addEventListener("change", onChangeFont);
 canvas.addEventListener("dblclick", onDoubleClick);
 
 canvas.addEventListener("click", onCanvasClick);
@@ -189,4 +197,3 @@ eraseMode.addEventListener("click", onEraseMode);
 
 fileInput.addEventListener("change", onFileChange);
 saveBtn.addEventListener("click", onSaveClick);
-fntForm.addEventListener("submit", onChangeFont);
